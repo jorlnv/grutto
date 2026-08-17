@@ -72,41 +72,25 @@
     <strong>Kaartlagen</strong>
     
     <label><input type="checkbox" id="toggleN2000" checked> <span class="color-box" style="background: #228B22; border-radius: 2px;"></span> N2000</label>
-    <label><input type="checkbox" id="toggleBufferstrook" checked> <span class="color-box" style="background: #115211; border-radius: 2px;"></span> Bufferstrook N2000</label>
+    <label><input type="checkbox" id="toggleBufferstrook" checked> <span class="color-box" style="background: #115211; border-radius: 2px;"></span> Zones rondom N2000 </label>
+    <label><input type="checkbox" id="toggleBeken" checked> <span class="color-box" style="background: #228B22; border-radius: 2px;"></span> Beekdalen (maatregelpakket) </label>
+    <label><input type="checkbox" id="toggleBekenBuffers" checked> <span class="color-box" style="background: #115211; border-radius: 2px;"></span> Zones rondom beekdalen </label>
+
+    <hr>
     <label><input type="checkbox" id="toggleNNN"> <span class="color-box" style="background: #2BA172; border-radius: 2px;"></span> NNN </label>
-    
+    <label><input type="checkbox" id="toggleANLB" checked> <span class="color-box" style="background: #9932CC; border-radius: 2px;"></span> ANLb</label>
+    <label><input type="checkbox" id="toggleSNL" checked> <span class="color-box" style="background: #C1A81E; border-radius: 2px;"></span> SNL (selectie) </label>
+    <label><input type="checkbox" id="toggleSNLOv" checked> <span class="color-box" style="background: #1D405D; border-radius: 2px;"></span> SNL (overig) </label>    
     <hr>
     
-    <label><input type="checkbox" id="toggleVeenweide" checked> <span class="color-box" style="background: #9932CC; border-radius: 2px;"></span> Veenweide</label>
-    <label><input type="checkbox" id="toggleGWB" checked> <span class="color-box" style="background: #C1A81E; border-radius: 2px;"></span> Grondwaterbescherming</label>
-    <label><input type="checkbox" id="toggleBeekdal" checked> <span class="color-box" style="background: #1D405D; border-radius: 2px;"></span> Beekdalen</label>
-    <label><input type="checkbox" id="toggleVogelbescherming" checked> <span class="color-box" style="background: #8B4513; border-radius: 2px;"></span> Vogelbescherming</label>
+    <label><input type="checkbox" id="toggleAanvalsplan" checked> <span class="color-box" style="background: #9932CC; border-radius: 2px;"></span> Aanvalsplan Zoekgebied Grutto</label>
+    <label><input type="checkbox" id="toggleBroedgebied" checked> <span class="color-box" style="background: #C1A81E; border-radius: 2px;"></span> Broedgebied Grutto</label>
+    <label><input type="checkbox" id="toggleDensity" checked> <span class="color-box" style="background: #1D405D; border-radius: 2px;"></span> Dichtheidskaart Grutto </label>
+    <label><input type="checkbox" id="toggleKerngebied" checked> <span class="color-box" style="background: #8B4513; border-radius: 2px;"></span> Kerngebieden Grutto </label>
     
     <hr>
-    
-    <label><input type="checkbox" id="toggleStallen"> <strong>Stallen (per type)</strong></label>
-    <div class="legend-sub-item"><span class="color-box" style="background: #233C93;"></span> Rundvee</div>
-    <div class="legend-sub-item"><span class="color-box" style="background: #BC8515;"></span> Varkens</div>
-    <div class="legend-sub-item"><span class="color-box" style="background: #B014AD;"></span> Kippen</div>
-    <div class="legend-sub-item"><span class="color-box" style="background: #cccccc;"></span> Overig</div>
-
-    <hr>
-    Gewaspercelen
-    <label><input type="checkbox" id="toggleGrasland"> <span class="color-box" style="background: #ACF47F; border-radius: 0px;"></span> Agrarisch Grasland </label>
-    <label><input type="checkbox" id="toggleAkkerbouw"> <span class="color-box" style="background: #FFFF12; border-radius: 0px;"></span> Akkerbouw </label>
-    <label><input type="checkbox" id="toggleLelies"> <span class="color-box" style="background: #F209B8; border-radius: 0px;"></span> Lelieteelt </label>
-   
-    <hr>
-    
-    <label><input type="checkbox" id="toggleWoningbouw"> <span class="color-box" style="background: #570B2E; border-radius: 2px;"></span> Grootschalige woningbouwprojecten</label>
-
-    <hr>
-    
-    <label><input type="checkbox" id="toggleWaterschap"> <span class="color-box" style="border: 2px solid #333; background: transparent; border-radius: 2px;"></span> Waterschapsgrenzen</label>
-    <label><input type="checkbox" id="toggleProvincie"> <span class="color-box" style="border: 2px solid #666; background: transparent; border-radius: 2px;"></span> Provinciegrenzen</label>
-    
-    <hr>
-    
+    <label><input type="checkbox" id="toggleProvincie"> <span class="color-box" style="border: 2px solid #666; background: transparent; border-radius: 2px;"></span> Provinciegrenzen</label>    
+    <hr>    
     <label><input type="checkbox" id="toggleBaseMap" checked> Achtergrondkaart</label>
 </div>
 
@@ -211,7 +195,7 @@ async function initMap() {
         }, 'none');
         
         // Stallen met data-driven styling
-        await addPmtilesLayer('stallen', 'BAB.pmtiles', 'BAB', 'circle', {
+       /* await addPmtilesLayer('stallen', 'BAB.pmtiles', 'BAB', 'circle', {
             'circle-color': [
                 'match', ['get', 'VRAAGOMSCHRIJVING'],
                 'HUISVESTING RUNDVEE', '#233C93',
@@ -226,7 +210,7 @@ async function initMap() {
             ],
             'circle-stroke-width': 1,
             'circle-stroke-color': '#fff'
-        }, 'none');
+        }, 'none'); */
 
         await addPmtilesLayer('waterschap', 'Waterschap.pmtiles', 'Waterschap', 'line', {
             'line-color': '#333', 'line-width': 1.5
