@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
     <meta charset="utf-8">
-    <title>Prioritaire Kaart - Clean Version</title>
+    <title> Grutto </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.21.1/dist/maplibre-gl.css" />
     <style>
@@ -83,10 +83,10 @@
     <label><input type="checkbox" id="toggleSNLOv" checked> <span class="color-box" style="background: #1D405D; border-radius: 2px;"></span> SNL (overig) </label>    
     <hr>
     
-    <label><input type="checkbox" id="toggleAanvalsplan" checked> <span class="color-box" style="background: #9932CC; border-radius: 2px;"></span> Aanvalsplan Zoekgebied Grutto</label>
-    <label><input type="checkbox" id="toggleBroedgebied" checked> <span class="color-box" style="background: #C1A81E; border-radius: 2px;"></span> Broedgebied Grutto</label>
-    <label><input type="checkbox" id="toggleDensity" checked> <span class="color-box" style="background: #1D405D; border-radius: 2px;"></span> Dichtheidskaart Grutto </label>
-    <label><input type="checkbox" id="toggleKerngebied" checked> <span class="color-box" style="background: #8B4513; border-radius: 2px;"></span> Kerngebieden Grutto </label>
+    <label><input type="checkbox" id="toggleAanvalsplan" checked> <span class="color-box" style="background: #640A19; border-radius: 2px;"></span> Aanvalsplan Zoekgebied Grutto</label>
+    <label><input type="checkbox" id="toggleBroedgebied" checked> <span class="color-box" style="background: #BA4A99; border-radius: 2px;"></span> Broedgebied Grutto</label>
+    <label><input type="checkbox" id="toggleDensity" checked> <span class="color-box" style="background: #B0AB16; border-radius: 2px;"></span> Dichtheidskaart Grutto </label>
+    <label><input type="checkbox" id="toggleKerngebied" checked> <span class="color-box" style="background: #000000; border-radius: 2px;"></span> Kerngebieden Grutto </label>
     
     <hr>
     <label><input type="checkbox" id="toggleProvincie"> <span class="color-box" style="border: 2px solid #666; background: transparent; border-radius: 2px;"></span> Provinciegrenzen</label>    
@@ -150,17 +150,34 @@ async function initMap() {
 
         // --- Data Lagen Inladen ---
 
-        
-        await addPmtilesLayer('grasland', 'GRASLAND.pmtiles', 'GRASLAND', 'fill', {
-            'fill-color': '#ACF47F', 'fill-opacity': 0.6
+        // Vogels
+        await addPmtilesLayer('broedgebied', 'BROEDGEBIED_GRUTTO.pmtiles', 'BROEDGEBIED_GRUTTO', 'fill', {
+            'fill-color': '#BA4A99', 'fill-opacity': 0.6
         }, 'none');
-        await addPmtilesLayer('akkerbouw', 'AKKERBOUW.pmtiles', 'AKKERBOUW', 'fill', {
-            'fill-color': '#FFFF12', 'fill-opacity': 0.6
-        }, 'none');
-        await addPmtilesLayer('lelies', 'Lelies.pmtiles', 'Lelies', 'fill', {
-            'fill-color': '#F209B8', 'fill-opacity': 0.6
+        await addPmtilesLayer('aanvalsplan', 'AANVALSPLAN_ZGB.pmtiles', 'AANVALSPLAN_ZGB', 'fill', {
+            'fill-color': '#640A19', 'fill-opacity': 0.6
         }, 'none');
 
+        await addPmtilesLayer('kerngebied', 'GRUTTO_KGB.pmtiles', 'GRUTTO_KGB', 'fill', {
+            'fill-color': '#B0AB16', 'fill-opacity': 0.6
+        }, 'none');
+        await addPmtilesLayer('grutto', 'GRUTTO_DENSITY.pmtiles', 'GRUTTO_DENSITY', 'fill', {
+            'fill-color': [
+                'interpolate',
+                ['linear'],
+                ['get', '5320_Grutto_absoluut_aantal_q50_cutoff'],
+                0,      '#FFFFCC',
+                0.031,  '#FED976',
+                0.077,  '#FEB24C',
+                0.193,  '#FD8D3C',
+                0.5,    '#E31A1C',
+                1.0,    '#800026'
+            ],
+            'fill-opacity': 0.7,
+            'fill-outline-color': 'rgba(0,0,0,0.1)'
+        }, 'none');
+
+        // Landgebieden
         
         await addPmtilesLayer('veenweide', 'veenweide.pmtiles', 'veenweide_laag', 'fill', {
             'fill-color': '#9932CC', 'fill-opacity': 0.4
@@ -178,6 +195,7 @@ async function initMap() {
             'fill-color': '#2BA172', 'fill-opacity': 0.6
         }, 'none');
 
+        // Zonering
         await addPmtilesLayer('gwb', 'GWB.pmtiles', 'GWB', 'fill', {
             'fill-color': '#C1A81E', 'fill-opacity': 0.6
         });
@@ -212,9 +230,6 @@ async function initMap() {
             'circle-stroke-color': '#fff'
         }, 'none'); */
 
-        await addPmtilesLayer('waterschap', 'Waterschap.pmtiles', 'Waterschap', 'line', {
-            'line-color': '#333', 'line-width': 1.5
-        }, 'none');
 
         await addPmtilesLayer('provincie', 'Provincies.pmtiles', 'Provincies', 'line', {
             'line-color': '#666', 'line-width': 1.5
