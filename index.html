@@ -80,7 +80,7 @@
     <label><input type="checkbox" id="toggleNNN"> <span class="color-box" style="background: #2BA172; border-radius: 2px;"></span> NNN </label>
     <label><input type="checkbox" id="toggleANLB" checked> <span class="color-box" style="background: #9932CC; border-radius: 2px;"></span> ANLb</label>
     <label><input type="checkbox" id="toggleSNL" checked> <span class="color-box" style="background: #C1A81E; border-radius: 2px;"></span> SNL (selectie) </label>
-    <label><input type="checkbox" id="toggleSNLOv" checked> <span class="color-box" style="background: #F2FE3F; border-radius: 2px;"></span> SNL (overig) </label>    
+    <label><input type="checkbox" id="toggleSNLOv" checked> <span class="color-box" style="background: #C4CE66; border-radius: 2px;"></span> SNL (overig) </label>    
     <hr>
     
     <label><input type="checkbox" id="toggleAanvalsplan" checked> <span class="color-box" style="background: #640A19; border-radius: 2px;"></span> Aanvalsplan Zoekgebied Grutto</label>
@@ -180,7 +180,7 @@ async function initMap() {
         // Landgebieden
         
         await addPmtilesLayer('SNLov', 'SNL_OVERIG.pmtiles', 'SNL_OVERIG', 'fill', {
-            'fill-color': '#F2FE3F', 'fill-opacity': 0.4
+            'fill-color': '#C4CE66', 'fill-opacity': 0.4
         });
 
         await addPmtilesLayer('SNL', 'SNL.pmtiles', 'SNL', 'fill', {
@@ -254,11 +254,53 @@ async function initMap() {
             }
         });
 
+        map.on('mousemove', 'SNL_layer', (e) => {
+            const currentZoom = map.getZoom();
+            if (currentZoom > 12) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = e.features[0].properties;
+                const beheertype = props.beheertype || 'Onbekend'; // check je echte kolomnaam
+                const beheernaam = props.beheer || 'Onbekend'; // check je echte kolomnaam
+
+                popup.setLngLat(e.lngLat)
+                    .setHTML(`<div class="popup-content">${beheertype} : {beheernaam}</div>`)
+                    .addTo(map);
+            } else {
+                map.getCanvas().style.cursor = '';
+                popup.remove();
+            }
+        });
+
+        map.on('mousemove', 'SNLov_layer', (e) => {
+            const currentZoom = map.getZoom();
+            if (currentZoom > 12) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = e.features[0].properties;
+                const beheertype = props.beheertype || 'Onbekend'; // check je echte kolomnaam
+                const beheernaam = props.beheer || 'Onbekend'; // check je echte kolomnaam
+
+                popup.setLngLat(e.lngLat)
+                    .setHTML(`<div class="popup-content">${beheertype} : {beheernaam}</div>`)
+                    .addTo(map);
+            } else {
+                map.getCanvas().style.cursor = '';
+                popup.remove();
+            }
+        });
+
         map.on('mouseleave', 'ANLB_layer', () => {
             map.getCanvas().style.cursor = '';
             popup.remove();
         });
         map.on('mouseleave', 'NNN_layer', () => {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+        });
+        map.on('mouseleave', 'SNL_layer', () => {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+        });
+        map.on('mouseleave', 'SNLov_layer', () => {
             map.getCanvas().style.cursor = '';
             popup.remove();
         });
