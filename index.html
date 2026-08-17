@@ -263,7 +263,7 @@ async function initMap() {
                 const beheernaam = props.beheer || 'Onbekend'; // check je echte kolomnaam
 
                 popup.setLngLat(e.lngLat)
-                    .setHTML(`<div class="popup-content">${beheertype} : {beheernaam}</div>`)
+                    .setHTML(`<div class="popup-content">${beheertype} : ${beheernaam}</div>`)
                     .addTo(map);
             } else {
                 map.getCanvas().style.cursor = '';
@@ -280,7 +280,7 @@ async function initMap() {
                 const beheernaam = props.beheer || 'Onbekend'; // check je echte kolomnaam
 
                 popup.setLngLat(e.lngLat)
-                    .setHTML(`<div class="popup-content">${beheertype} : {beheernaam}</div>`)
+                    .setHTML(`<div class="popup-content">${beheertype} : ${beheernaam}</div>`)
                     .addTo(map);
             } else {
                 map.getCanvas().style.cursor = '';
