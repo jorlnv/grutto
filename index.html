@@ -73,20 +73,20 @@
     
     <label><input type="checkbox" id="toggleN2000" checked> <span class="color-box" style="background: #228B22; border-radius: 2px;"></span> N2000</label>
     <label><input type="checkbox" id="toggleBufferstrook" checked> <span class="color-box" style="background: #115211; border-radius: 2px;"></span> Zones rondom N2000 </label>
-    <label><input type="checkbox" id="toggleBeken" checked> <span class="color-box" style="background: #228B22; border-radius: 2px;"></span> Beekdalen (maatregelpakket) </label>
-    <label><input type="checkbox" id="toggleBekenBuffers" checked> <span class="color-box" style="background: #115211; border-radius: 2px;"></span> Zones rondom beekdalen </label>
+    <label><input type="checkbox" id="toggleBeken" checked> <span class="color-box" style="background: #225F8B; border-radius: 2px;"></span> Beekdalen (maatregelpakket) </label>
+    <label><input type="checkbox" id="toggleBekenBuffers" checked> <span class="color-box" style="background: #6491B2; border-radius: 2px;"></span> Zones rondom beekdalen </label>
 
     <hr>
     <label><input type="checkbox" id="toggleNNN"> <span class="color-box" style="background: #2BA172; border-radius: 2px;"></span> NNN </label>
     <label><input type="checkbox" id="toggleANLB" checked> <span class="color-box" style="background: #9932CC; border-radius: 2px;"></span> ANLb</label>
     <label><input type="checkbox" id="toggleSNL" checked> <span class="color-box" style="background: #C1A81E; border-radius: 2px;"></span> SNL (selectie) </label>
-    <label><input type="checkbox" id="toggleSNLOv" checked> <span class="color-box" style="background: #1D405D; border-radius: 2px;"></span> SNL (overig) </label>    
+    <label><input type="checkbox" id="toggleSNLOv" checked> <span class="color-box" style="background: #F2FE3F; border-radius: 2px;"></span> SNL (overig) </label>    
     <hr>
     
     <label><input type="checkbox" id="toggleAanvalsplan" checked> <span class="color-box" style="background: #640A19; border-radius: 2px;"></span> Aanvalsplan Zoekgebied Grutto</label>
     <label><input type="checkbox" id="toggleBroedgebied" checked> <span class="color-box" style="background: #BA4A99; border-radius: 2px;"></span> Broedgebied Grutto</label>
-    <label><input type="checkbox" id="toggleDensity" checked> <span class="color-box" style="background: #B0AB16; border-radius: 2px;"></span> Dichtheidskaart Grutto </label>
-    <label><input type="checkbox" id="toggleKerngebied" checked> <span class="color-box" style="background: #000000; border-radius: 2px;"></span> Kerngebieden Grutto </label>
+    <label><input type="checkbox" id="toggleDensity" checked> <span class="color-box" style="background: #FFFFFF; border-radius: 2px;"></span> Dichtheidskaart Grutto </label>
+    <label><input type="checkbox" id="toggleKerngebied" checked> <span class="color-box" style="background: #FD8D3C; border-radius: 2px;"></span> Kerngebieden Grutto </label>
     
     <hr>
     <label><input type="checkbox" id="toggleProvincie"> <span class="color-box" style="border: 2px solid #666; background: transparent; border-radius: 2px;"></span> Provinciegrenzen</label>    
@@ -159,7 +159,7 @@ async function initMap() {
         }, 'none');
 
         await addPmtilesLayer('kerngebied', 'GRUTTO_KGB.pmtiles', 'GRUTTO_KGB', 'fill', {
-            'fill-color': '#B0AB16', 'fill-opacity': 0.6
+            'fill-color': '#FD8D3C', 'fill-opacity': 0.6
         }, 'none');
         await addPmtilesLayer('density', 'GRUTTO_DENSITY.pmtiles', 'GRUTTO_DENSITY', 'fill', {
             'fill-color': [
@@ -184,11 +184,11 @@ async function initMap() {
         });
 
         await addPmtilesLayer('SNL', 'SNL.pmtiles', 'SNL', 'fill', {
-            'fill-color': '#AAB419', 'fill-opacity': 0.4
+            'fill-color': '#C1A81E', 'fill-opacity': 0.4
         });
 
         await addPmtilesLayer('ANLB', 'ANLB.pmtiles', 'ANLB', 'fill', {
-            'fill-color': '#040A86', 'fill-opacity': 0.6
+            'fill-color': '#9932CC', 'fill-opacity': 0.6
         });
 
         await addPmtilesLayer('NNN', 'NNN.pmtiles', 'NNN', 'fill', {
@@ -230,28 +230,8 @@ async function initMap() {
                 const beheerpakket = props.CODE_BEHEERPAKKET || 'Onbekend';
                 
                 popup.setLngLat(e.lngLat)
-                    .setHTML(`<div class="popup-content">Beheerpakket: ${category}</div>`)
+                    .setHTML(`<div class="popup-content">Beheerpakket: ${beheerpakket}</div>`)
                     .addTo(map);    
-            } else {
-                // Als we niet diep genoeg zijn ingezoomd: cursor terug en popup weg
-                map.getCanvas().style.cursor = '';
-                popup.remove();
-            }
-        });
-        // Hover voor de stallen (ALLEEN BIJ DIEP INZOOMEN)
-        map.on('mousemove', 'stallen_layer', (e) => {
-            const currentZoom = map.getZoom();
-
-            if (currentZoom > 12) {
-                map.getCanvas().style.cursor = 'pointer';
-                
-                const props = e.features[0].properties;
-                const coordinates = e.features[0].geometry.coordinates.slice();
-                const label = `${props.VRAAGOMSCHRIJVING || 'Stal'} - ${props.GEM_AANTAL_DIEREN || 0} dieren, emissie ${props.Emissie || 0} kg NH3`;
-                
-                popup.setLngLat(coordinates)
-                    .setHTML(`<div class="popup-content">${label}</div>`)
-                    .addTo(map);
             } else {
                 // Als we niet diep genoeg zijn ingezoomd: cursor terug en popup weg
                 map.getCanvas().style.cursor = '';
@@ -261,19 +241,14 @@ async function initMap() {
 
         map.on('mousemove', 'NNN_layer', (e) => {
             const currentZoom = map.getZoom();
-
             if (currentZoom > 12) {
                 map.getCanvas().style.cursor = 'pointer';
-                
                 const props = e.features[0].properties;
-                const NAMETEXT = e.features[0].geometry.coordinates.slice();
-                const label = `${NAMETEXT}`;
-                
-                popup.setLngLat(coordinates)
+                const label = props.NAMETEXT || 'Onbekend'; // check je echte kolomnaam
+                popup.setLngLat(e.lngLat)
                     .setHTML(`<div class="popup-content">${label}</div>`)
                     .addTo(map);
             } else {
-                // Als we niet diep genoeg zijn ingezoomd: cursor terug en popup weg
                 map.getCanvas().style.cursor = '';
                 popup.remove();
             }
