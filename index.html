@@ -78,15 +78,15 @@
 
     <hr>
     <label><input type="checkbox" id="toggleNNN"> <span class="color-box" style="background: #2BA172; border-radius: 2px;"></span> NNN </label>
-    <label><input type="checkbox" id="toggleANLB" checked> <span class="color-box" style="background: #9932CC; border-radius: 2px;"></span> ANLb</label>
-    <label><input type="checkbox" id="toggleSNL" checked> <span class="color-box" style="background: #C1A81E; border-radius: 2px;"></span> SNL (selectie) </label>
-    <label><input type="checkbox" id="toggleSNLOv" checked> <span class="color-box" style="background: #C4CE66; border-radius: 2px;"></span> SNL (overig) </label>    
+    <label><input type="checkbox" id="toggleANLB"> <span class="color-box" style="background: #9932CC; border-radius: 2px;"></span> ANLb</label>
+    <label><input type="checkbox" id="toggleSNL" > <span class="color-box" style="background: #C1A81E; border-radius: 2px;"></span> SNL (selectie) </label>
+    <label><input type="checkbox" id="toggleSNLOv" > <span class="color-box" style="background: #C4CE66; border-radius: 2px;"></span> SNL (overig) </label>    
     <hr>
     
-    <label><input type="checkbox" id="toggleAanvalsplan" checked> <span class="color-box" style="background: #640A19; border-radius: 2px;"></span> Aanvalsplan Zoekgebied Grutto</label>
-    <label><input type="checkbox" id="toggleBroedgebied" checked> <span class="color-box" style="background: #BA4A99; border-radius: 2px;"></span> Broedgebied Grutto</label>
-    <label><input type="checkbox" id="toggleDensity" checked> <span class="color-box" style="background: #FFFFFF; border-radius: 2px;"></span> Dichtheidskaart Grutto </label>
-    <label><input type="checkbox" id="toggleKerngebied" checked> <span class="color-box" style="background: #FD8D3C; border-radius: 2px;"></span> Kerngebieden Grutto </label>
+    <label><input type="checkbox" id="toggleAanvalsplan" > <span class="color-box" style="background: #640A19; border-radius: 2px;"></span> Aanvalsplan Zoekgebied Grutto</label>
+    <label><input type="checkbox" id="toggleBroedgebied" > <span class="color-box" style="background: #BA4A99; border-radius: 2px;"></span> Broedgebied Grutto</label>
+    <label><input type="checkbox" id="toggleDensity" > <span class="color-box" style="background: #FFFFFF; border-radius: 2px;"></span> Dichtheidskaart Grutto </label>
+    <label><input type="checkbox" id="toggleKerngebied" > <span class="color-box" style="background: #FD8D3C; border-radius: 2px;"></span> Kerngebieden Grutto </label>
     
     <hr>
     <label><input type="checkbox" id="toggleProvincie"> <span class="color-box" style="border: 2px solid #666; background: transparent; border-radius: 2px;"></span> Provinciegrenzen</label>    
@@ -181,15 +181,15 @@ async function initMap() {
         
         await addPmtilesLayer('SNLov', 'SNL_OVERIG.pmtiles', 'SNL_OVERIG', 'fill', {
             'fill-color': '#C4CE66', 'fill-opacity': 0.4
-        });
+        }, 'none');
 
         await addPmtilesLayer('SNL', 'SNL.pmtiles', 'SNL', 'fill', {
             'fill-color': '#C1A81E', 'fill-opacity': 0.4
-        });
+        }, 'none');
 
         await addPmtilesLayer('ANLB', 'ANLB.pmtiles', 'ANLB', 'fill', {
             'fill-color': '#9932CC', 'fill-opacity': 0.6
-        });
+        }, 'none');
 
         await addPmtilesLayer('NNN', 'NNN.pmtiles', 'NNN', 'fill', {
             'fill-color': '#2BA172', 'fill-opacity': 0.6
