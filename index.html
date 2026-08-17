@@ -161,7 +161,7 @@ async function initMap() {
         await addPmtilesLayer('kerngebied', 'GRUTTO_KGB.pmtiles', 'GRUTTO_KGB', 'fill', {
             'fill-color': '#B0AB16', 'fill-opacity': 0.6
         }, 'none');
-        await addPmtilesLayer('grutto', 'GRUTTO_DENSITY.pmtiles', 'GRUTTO_DENSITY', 'fill', {
+        await addPmtilesLayer('density', 'GRUTTO_DENSITY.pmtiles', 'GRUTTO_DENSITY', 'fill', {
             'fill-color': [
                 'interpolate',
                 ['linear'],
@@ -179,16 +179,16 @@ async function initMap() {
 
         // Landgebieden
         
-        await addPmtilesLayer('veenweide', 'veenweide.pmtiles', 'veenweide_laag', 'fill', {
-            'fill-color': '#9932CC', 'fill-opacity': 0.4
+        await addPmtilesLayer('SNLov', 'SNL_OVERIG.pmtiles', 'SNL_OVERIG', 'fill', {
+            'fill-color': '#F2FE3F', 'fill-opacity': 0.4
         });
 
-        await addPmtilesLayer('n2000', 'N2000.pmtiles', 'N2000', 'fill', {
-            'fill-color': '#228B22', 'fill-opacity': 0.4
+        await addPmtilesLayer('SNL', 'SNL.pmtiles', 'SNL', 'fill', {
+            'fill-color': '#AAB419', 'fill-opacity': 0.4
         });
 
-        await addPmtilesLayer('bufferstrook', 'bufferstrook.pmtiles', 'bufferstrook', 'fill', {
-            'fill-color': '#115211', 'fill-opacity': 0.6
+        await addPmtilesLayer('ANLB', 'ANLB.pmtiles', 'ANLB', 'fill', {
+            'fill-color': '#040A86', 'fill-opacity': 0.6
         });
 
         await addPmtilesLayer('NNN', 'NNN.pmtiles', 'NNN', 'fill', {
@@ -196,40 +196,22 @@ async function initMap() {
         }, 'none');
 
         // Zonering
-        await addPmtilesLayer('gwb', 'GWB.pmtiles', 'GWB', 'fill', {
+        await addPmtilesLayer('N2000', 'N2000.pmtiles', 'N2000', 'fill', {
             'fill-color': '#C1A81E', 'fill-opacity': 0.6
         });
 
-        await addPmtilesLayer('beekdal', 'Beekdalen.pmtiles', 'Beekdalen', 'fill', {
+        await addPmtilesLayer('N2000_BUFFER', 'N2000_BUFFER.pmtiles', 'N2000_BUFFER', 'fill', {
             'fill-color': '#1D405D', 'fill-opacity': 0.6
         });
 
-        await addPmtilesLayer('vogelbescherming', 'Vogelbeschermingsgebied.pmtiles', 'Vogelbeschermingsgebied', 'fill', {
-            'fill-color': '#8B4513', 'fill-opacity': 0.6
+        await addPmtilesLayer('beekdalen', 'BEKEN.pmtiles', 'BEKEN', 'fill', {
+            'fill-color': '#225F8B', 'fill-opacity': 0.6
         });
 
-        await addPmtilesLayer('woningbouw', 'Woningbouw.pmtiles', 'Woningbouw', 'fill', {
-            'fill-color': '#570B2E', 'fill-opacity': 0.6
+        await addPmtilesLayer('beekdalen_bufferstrook', 'BEKEN_BUFFER.pmtiles', 'BEKEN_BUFFER', 'fill', {
+            'fill-color': '#6491B2', 'fill-opacity': 0.6
         }, 'none');
         
-        // Stallen met data-driven styling
-       /* await addPmtilesLayer('stallen', 'BAB.pmtiles', 'BAB', 'circle', {
-            'circle-color': [
-                'match', ['get', 'VRAAGOMSCHRIJVING'],
-                'HUISVESTING RUNDVEE', '#233C93',
-                'HUISVESTING VARKENS', '#BC8515',
-                'HUISVESTING KIPPEN', '#B014AD',
-                '#cccccc' 
-            ],
-            'circle-radius': [
-                'interpolate', ['linear'], ['zoom'],
-                10, 3,
-                15, 12
-            ],
-            'circle-stroke-width': 1,
-            'circle-stroke-color': '#fff'
-        }, 'none'); */
-
 
         await addPmtilesLayer('provincie', 'Provincies.pmtiles', 'Provincies', 'line', {
             'line-color': '#666', 'line-width': 1.5
@@ -238,17 +220,17 @@ async function initMap() {
 
         // --- Hover events ---
         // Hover voor de stallen (ALLEEN BIJ DIEP INZOOMEN)
-        map.on('mousemove', 'akkerbouw_layer', (e) => {
+        map.on('mousemove', 'ANLB_layer', (e) => {
             const currentZoom = map.getZoom();
 
             if (currentZoom > 12) {
                 map.getCanvas().style.cursor = 'pointer';
                 
                 const props = e.features[0].properties;
-                const category = props.category || 'Onbekend';
+                const beheerpakket = props.CODE_BEHEERPAKKET || 'Onbekend';
                 
                 popup.setLngLat(e.lngLat)
-                    .setHTML(`<div class="popup-content">${category}</div>`)
+                    .setHTML(`<div class="popup-content">Beheerpakket: ${category}</div>`)
                     .addTo(map);    
             } else {
                 // Als we niet diep genoeg zijn ingezoomd: cursor terug en popup weg
@@ -277,27 +259,24 @@ async function initMap() {
             }
         });
 
-        // Hover voor de woningbouw (Altijd aan)
-        map.on('mousemove', 'woningbouw_layer', (e) => {
-            map.getCanvas().style.cursor = 'pointer';
-            
-            const props = e.features[0].properties;
-            const name = props.Name || 'Onbekend';
-            const plan = props.Plannaam || 'Onbekend';
-            
-            popup.setLngLat(e.lngLat)
-                .setHTML(`<div class="popup-content"><strong>${name}</strong><br>Plan: ${plan}</div>`)
-                .addTo(map);    
-        });
-        
-        map.on('mouseleave', 'stallen_layer', () => {
-            map.getCanvas().style.cursor = '';
-            popup.remove();
-        });
+        map.on('mousemove', 'NNN_layer', (e) => {
+            const currentZoom = map.getZoom();
 
-        map.on('mouseleave', 'woningbouw_layer', () => {
-            map.getCanvas().style.cursor = '';
-            popup.remove();
+            if (currentZoom > 12) {
+                map.getCanvas().style.cursor = 'pointer';
+                
+                const props = e.features[0].properties;
+                const NAMETEXT = e.features[0].geometry.coordinates.slice();
+                const label = `${NAMETEXT}`;
+                
+                popup.setLngLat(coordinates)
+                    .setHTML(`<div class="popup-content">${label}</div>`)
+                    .addTo(map);
+            } else {
+                // Als we niet diep genoeg zijn ingezoomd: cursor terug en popup weg
+                map.getCanvas().style.cursor = '';
+                popup.remove();
+            }
         });
 
 
@@ -312,20 +291,21 @@ async function initMap() {
             }
         };
 
-        setupToggle('toggleVeenweide', 'veenweide_layer');
-        setupToggle('toggleN2000', 'n2000_layer');
-        setupToggle('toggleBufferstrook', 'bufferstrook_layer');
-        setupToggle('toggleGWB', 'gwb_layer');
-        setupToggle('toggleBeekdal', 'beekdal_layer');
-        setupToggle('toggleVogelbescherming', 'vogelbescherming_layer');
-        setupToggle('toggleStallen', 'stallen_layer');
-        setupToggle('toggleWaterschap', 'waterschap_layer');
-        setupToggle('toggleProvincie', 'provincie_layer');
+        setupToggle('toggleN2000', 'N2000_layer');
+        setupToggle('toggleBufferstrook', 'N2000_BUFFER_layer');
+        setupToggle('toggleBeken', 'beekdalen_layer');
+        setupToggle('toggleBekenBuffers', 'beekdalen_bufferstrook_layer');
+        
         setupToggle('toggleNNN', 'NNN_layer');
-        setupToggle('toggleWoningbouw', 'woningbouw_layer');
-        setupToggle('toggleGrasland', 'grasland_layer');
-        setupToggle('toggleAkkerbouw', 'akkerbouw_layer');
-        setupToggle('toggleLelies', 'lelies_layer');
+        setupToggle('toggleANLB', 'ANLB_layer');
+        setupToggle('toggleSNL', 'SNL_layer');
+        setupToggle('toggleSNLOv', 'SNLov_layer');
+        
+        setupToggle('toggleProvincie', 'provincie_layer');
+        setupToggle('toggleAanvalsplan', 'aanvalsplan_layer');
+        setupToggle('toggleBroedgebied', 'broedgebied_layer');
+        setupToggle('toggleDensity', 'density_layer');
+        setupToggle('toggleKerngebied', 'kerngebied_layer');
 
         document.getElementById('toggleBaseMap').addEventListener('change', (e) => {
             const visibility = e.target.checked ? 'visible' : 'none';
