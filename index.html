@@ -74,6 +74,7 @@
     <label><input type="checkbox" id="toggleBufferstrook" checked> <span class="color-box" style="background: #115211; border-radius: 2px;"></span> Zones rondom N2000 </label>
     <label><input type="checkbox" id="toggleBeken" checked> <span class="color-box" style="background: #225F8B; border-radius: 2px;"></span> Beekdalen (maatregelpakket) </label>
     <label><input type="checkbox" id="toggleBekenBuffers" checked> <span class="color-box" style="background: #6491B2; border-radius: 2px;"></span> Zones rondom beekdalen </label>
+    <label><input type="checkbox" id="toggleVeenweide" checked> <span class="color-box" style="background: #9C7550; border-radius: 2px;"></span> Veenweidegebieden </label>
     
     <hr>
     <label><input type="checkbox" id="toggleNNN"> <span class="color-box" style="background: #2BA172; border-radius: 2px;"></span> NNN </label>
@@ -214,7 +215,10 @@ async function initMap() {
             'fill-color': '#6491B2', 'fill-opacity': 0.6
         }, 'none');
         
-
+        await addPmtilesLayer('veenweide', 'veenweide.pmtiles', 'veenweide_laag', 'fill', {
+            'fill-color': '#9C7550', 'fill-opacity': 0.6
+        }, 'none');
+        
         await addPmtilesLayer('provincie', 'Provincies.pmtiles', 'Provincies', 'line', {
             'line-color': '#666', 'line-width': 1.5
         }, 'none');
@@ -322,6 +326,7 @@ async function initMap() {
         setupToggle('toggleBufferstrook', 'N2000_BUFFER_layer');
         setupToggle('toggleBeken', 'beekdalen_layer');
         setupToggle('toggleBekenBuffers', 'beekdalen_bufferstrook_layer');
+        setupToggle('toggleVeenweide', 'veenweide_layer');
 
         setupToggle('toggleNNN', 'NNN_layer');
         setupToggle('toggleANLB', 'ANLB_layer');
