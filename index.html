@@ -74,7 +74,7 @@
     <label><input type="checkbox" id="toggleBufferstrook" checked> <span class="color-box" style="background: #115211; border-radius: 2px;"></span> Zones rondom N2000 </label>
     <label><input type="checkbox" id="toggleBeken" checked> <span class="color-box" style="background: #225F8B; border-radius: 2px;"></span> Beekdalen (maatregelpakket) </label>
     <label><input type="checkbox" id="toggleBekenBuffers" checked> <span class="color-box" style="background: #6491B2; border-radius: 2px;"></span> Zones rondom beekdalen </label>
-    <label><input type="checkbox" id="toggleVeenweide" checked> <span class="color-box" style="background: #9C7550; border-radius: 2px;"></span> Veenweidegebieden </label>
+    <label><input type="checkbox" id="toggleVeenweide"> <span class="color-box" style="background: #9C7550; border-radius: 2px;"></span> Veenweidegebieden </label>
     
     <hr>
     <label><input type="checkbox" id="toggleNNN"> <span class="color-box" style="background: #2BA172; border-radius: 2px;"></span> NNN </label>
@@ -213,7 +213,7 @@ async function initMap() {
 
         await addPmtilesLayer('beekdalen_bufferstrook', 'BEKEN_BUFFER.pmtiles', 'BEKEN_BUFFER', 'fill', {
             'fill-color': '#6491B2', 'fill-opacity': 0.6
-        }, 'none');
+        });
         
         await addPmtilesLayer('veenweide', 'veenweide.pmtiles', 'veenweide_laag', 'fill', {
             'fill-color': '#9C7550', 'fill-opacity': 0.6
