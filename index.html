@@ -70,12 +70,11 @@
 
 <div id="layerControl">
     <strong>Kaartlagen</strong>
-    
     <label><input type="checkbox" id="toggleN2000" checked> <span class="color-box" style="background: #228B22; border-radius: 2px;"></span> N2000</label>
     <label><input type="checkbox" id="toggleBufferstrook" checked> <span class="color-box" style="background: #115211; border-radius: 2px;"></span> Zones rondom N2000 </label>
     <label><input type="checkbox" id="toggleBeken" checked> <span class="color-box" style="background: #225F8B; border-radius: 2px;"></span> Beekdalen (maatregelpakket) </label>
     <label><input type="checkbox" id="toggleBekenBuffers" checked> <span class="color-box" style="background: #6491B2; border-radius: 2px;"></span> Zones rondom beekdalen </label>
-
+    
     <hr>
     <label><input type="checkbox" id="toggleNNN"> <span class="color-box" style="background: #2BA172; border-radius: 2px;"></span> NNN </label>
     <label><input type="checkbox" id="toggleANLB"> <span class="color-box" style="background: #9932CC; border-radius: 2px;"></span> ANLb</label>
@@ -83,10 +82,11 @@
     <label><input type="checkbox" id="toggleSNLOv" > <span class="color-box" style="background: #C4CE66; border-radius: 2px;"></span> SNL (overig) </label>    
     <hr>
     
-    <label><input type="checkbox" id="toggleAanvalsplan" > <span class="color-box" style="background: #640A19; border-radius: 2px;"></span> Aanvalsplan Zoekgebied Grutto</label>
-    <label><input type="checkbox" id="toggleBroedgebied" > <span class="color-box" style="background: #BA4A99; border-radius: 2px;"></span> Broedgebied Grutto</label>
+    <label><input type="checkbox" id="toggleAanvalsplan" > <span class="color-box" style="background: #640A19; border-radius: 2px;"></span> Zoekgebied Aanvalsplan Grutto</label>
+    <label><input type="checkbox" id="toggleBroedgebied" > <span class="color-box" style="background: #BA4A99; border-radius: 2px;"></span> Vogelrichtlijngebieden met ISHD Grutto</label>
     <label><input type="checkbox" id="toggleDensity" > <span class="color-box" style="background: #FFFFFF; border-radius: 2px;"></span> Dichtheidskaart Grutto </label>
     <label><input type="checkbox" id="toggleKerngebied" > <span class="color-box" style="background: #FD8D3C; border-radius: 2px;"></span> Kerngebieden Grutto </label>
+    <label><input type="checkbox" id="toggleConcentratiegebieden" > <span class="color-box" style="background: #9D56C9; border-radius: 2px;"></span> Concentratiegebied Grutto</label>
     
     <hr>
     <label><input type="checkbox" id="toggleProvincie"> <span class="color-box" style="border: 2px solid #666; background: transparent; border-radius: 2px;"></span> Provinciegrenzen</label>    
@@ -157,7 +157,9 @@ async function initMap() {
         await addPmtilesLayer('aanvalsplan', 'AANVALSPLAN_ZGB.pmtiles', 'AANVALSPLAN_ZGB', 'fill', {
             'fill-color': '#640A19', 'fill-opacity': 0.6
         }, 'none');
-
+        await addPmtilesLayer('concentratiegebieden', 'CONCENTRATIE.pmtiles', 'CONCENTRATIE', 'fill', {
+            'fill-color': '#9D56C9', 'fill-opacity': 0.6
+        }, 'none');
         await addPmtilesLayer('kerngebied', 'GRUTTO_KGB.pmtiles', 'GRUTTO_KGB', 'fill', {
             'fill-color': '#FD8D3C', 'fill-opacity': 0.6
         }, 'none');
@@ -320,7 +322,7 @@ async function initMap() {
         setupToggle('toggleBufferstrook', 'N2000_BUFFER_layer');
         setupToggle('toggleBeken', 'beekdalen_layer');
         setupToggle('toggleBekenBuffers', 'beekdalen_bufferstrook_layer');
-        
+
         setupToggle('toggleNNN', 'NNN_layer');
         setupToggle('toggleANLB', 'ANLB_layer');
         setupToggle('toggleSNL', 'SNL_layer');
@@ -330,7 +332,8 @@ async function initMap() {
         setupToggle('toggleAanvalsplan', 'aanvalsplan_layer');
         setupToggle('toggleBroedgebied', 'broedgebied_layer');
         setupToggle('toggleDensity', 'density_layer');
-        setupToggle('toggleKerngebied', 'kerngebied_layer');
+        setupToggle('toggleKerngebied', 'kerngebied_layer');\
+        setupToggle('toggleConcentratiegebieden', 'concentratiegebieden_layer');
 
         document.getElementById('toggleBaseMap').addEventListener('change', (e) => {
             const visibility = e.target.checked ? 'visible' : 'none';
